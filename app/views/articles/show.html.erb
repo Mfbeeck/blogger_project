@@ -3,27 +3,33 @@
   	<%= image_tag @article.image.url(:medium)%><br/>
   	<% end %>
     <h1><%="Article: "%><%=@article.title%></h1>
-    <p>
-	Tags:
+    <p><strong>Tags:</strong>
+   	<!-- below I am printing tags if there are and if not then I am printing "none"  -->
+	<%if @article.tags.any?%>
 	<% @article.tags.each do |tag| %>
 	<%= link_to tag.name, tag_path(tag) %>
 	<% end %>
+	<%else%>
+	<%="None"%>
+	<%end%>
     </p>
-	<%="Content:"%>
+	<strong><%="Content:"%></strong>
 	<%=@article.body%>
-<%= render partial: 'comments/form' %>
+	<%= render partial: 'comments/form' %>
 
-<h3>Comments</h3>
-<% @article.comments.each do |comment| %>
-<%= comment.author_name%><%= ":"%>
-<%=comment.body %> &nbsp; <p>Posted <%= time_ago_in_words(comment.created_at) %><%=" ago"%><br>
-<%end%>
+	<h3>Comments</h3>
+	<% @article.comments.each do |comment| %>
+	<%= comment.author_name%><%= ":"%>
+	<%=comment.body %> &nbsp; <p>Posted <%= time_ago_in_words(comment.created_at) %><%=" ago"%><br>
+	<%end%>
 </ul>
 <br>
+<% if logged_in? %>
 <%= link_to "edit", edit_article_path(@article) %>
 <br>
 <%= link_to "delete", article_path(@article), method: :delete, data: {confirm: "Are you sure you want to delete the article?"} %>
 <br>
+<% end %>
 <%= link_to "<< Back to Articles List", articles_path %>
 
 
