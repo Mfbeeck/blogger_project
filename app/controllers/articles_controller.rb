@@ -29,6 +29,12 @@ class ArticlesController < ApplicationController
 		flash.notice = "The article \"#{@article.title}\" was successfully created."
 
 	end
+	
+	def tag_list
+		self.tags.collect do |tag|
+			tag.name
+		end.join(", ")
+	end
 
 	def destroy
 		@article = Article.find(params[:id])

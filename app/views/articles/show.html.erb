@@ -1,8 +1,13 @@
 <ul id="article_show">
-    <h1><%="Post: "%><%=@article.title%></h1>
-    	<%="Content:"%>
-		<%=@article.body%>
-</ul>
+    <h1><%="Article: "%><%=@article.title%></h1>
+    <p>
+	Tags:
+	<% @article.tags.each do |tag| %>
+	<%= link_to tag.name, tag_path(tag) %>
+	<% end %>
+    </p>
+	<%="Content:"%>
+	<%=@article.body%>
 <%= render partial: 'comments/form' %>
 
 <h3>Comments</h3>
@@ -10,6 +15,7 @@
 <%= comment.author_name%><%= ":"%>
 <%=comment.body %> &nbsp; <p>Posted <%= time_ago_in_words(comment.created_at) %><%=" ago"%><br>
 <%end%>
+</ul>
 <br>
 <%= link_to "edit", edit_article_path(@article) %>
 <br>
