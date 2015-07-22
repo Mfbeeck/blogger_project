@@ -1,4 +1,7 @@
 <ul id="article_show">
+ 	<% if @article.image.exists? %>
+  	<%= image_tag @article.image.url(:medium)%><br/>
+  	<% end %>
     <h1><%="Article: "%><%=@article.title%></h1>
     <p>
 	Tags:
